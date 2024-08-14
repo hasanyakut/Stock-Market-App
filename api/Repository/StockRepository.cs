@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
@@ -70,6 +71,11 @@ namespace api.Repository
         public async Task<Stock?> GetByIdAsync(int id)
         {
             return await _context.Stock.Include(c => c.Comments).FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public async Task<Stock?> GetBySymbolAsync(string symbol)
+        {
+            return await _context.Stock.FirstOrDefaultAsync(s => s.Symbol == symbol);
         }
 
         public Task<bool> StockExists(int id)
